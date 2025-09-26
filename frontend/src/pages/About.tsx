@@ -16,47 +16,47 @@ import {
   ExternalLink,
   Github,
 } from "lucide-react";
-import tempoSatellite from "@/assets/tempo-satellite.jpg";
+import tempoSatellite from "../assets/tempo-satellite.jpg";
 
 const About = () => {
   const teamMembers = [
     {
-      name: "Dr. Emily Rodriguez",
-      role: "Project Lead & Atmospheric Scientist",
-      bio: "15+ years in atmospheric research at NASA Goddard",
+      name: "Sourabh Upadhyay",
+      role: "Full stack ",
+      bio: "",
       expertise: ["TEMPO Mission", "Air Quality Modeling", "Remote Sensing"],
       image: "/team/emily.jpg"
     },
     {
-      name: "Alex Chen",
+      name: "Vivek singh Bhadoriya ",
       role: "Lead Software Engineer", 
       bio: "Full-stack developer specializing in geospatial applications",
       expertise: ["React/TypeScript", "GIS Systems", "Real-time Data"],
       image: "/team/alex.jpg"
     },
     {
-      name: "Dr. Marcus Thompson",
+      name: "Dheeraj Singh Bisht",
       role: "Public Health Researcher",
       bio: "Environmental health expert and community advocate",
       expertise: ["Health Impact Assessment", "Environmental Justice", "Policy"],
       image: "/team/marcus.jpg"
     },
     {
-      name: "Sarah Kim",
+      name: "Uday Saini",
       role: "UX/UI Designer",
       bio: "Design professional focused on scientific data visualization",
       expertise: ["Data Visualization", "User Experience", "Accessibility"],
       image: "/team/sarah.jpg"
     },
     {
-      name: "Dr. Robert Martinez",
+      name: "Udita Chaudhary",
       role: "Machine Learning Engineer", 
       bio: "AI/ML specialist with focus on environmental applications",
       expertise: ["Deep Learning", "Time Series", "Predictive Modeling"],
       image: "/team/robert.jpg"
     },
     {
-      name: "Jessica Park",
+      name: "Prakriti Adhikari",
       role: "Community Outreach Coordinator",
       bio: "Community engagement expert and environmental advocate",
       expertise: ["Community Building", "Education", "Advocacy"],
