@@ -27,14 +27,14 @@ const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-nasa">
-              <Satellite className="h-6 w-6 text-white" />
+              <img src="/favicon.jpg" alt="Breathe Easy Logo" className="h-6 w-6" />
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                AirVision TEMPO
+                Breathe Easy
               </span>
               <span className="text-xs text-muted-foreground hidden sm:block">
-                NASA Air Quality Intelligence
+                 Air, Made Pure.
               </span>
             </div>
           </Link>
