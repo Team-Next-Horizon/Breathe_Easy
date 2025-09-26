@@ -20,6 +20,68 @@ import earthImage from "@/assets/earth-from-space.jpg";
 
 const HomePage = () => {
   const [searchLocation, setSearchLocation] = useState("");
+  const [currentLocation, setCurrentLocation] = useState("San Francisco, CA");
+  const [isLocating, setIsLocating] = useState(false);
+
+  const handleUseMyLocation = () => {
+    setIsLocating(true);
+    
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by this browser.");
+      setIsLocating(false);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        
+        try {
+          // Use reverse geocoding to get city name
+          const response = await fetch(
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+          );
+          const data = await response.json();
+          const city = data.city || data.locality || "Unknown Location";
+          const state = data.principalSubdivision || "";
+          const locationString = state ? `${city}, ${state}` : city;
+          
+          setCurrentLocation(locationString);
+          setSearchLocation(locationString);
+        } catch (error) {
+          console.error("Error getting location name:", error);
+          setCurrentLocation(`${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
+          setSearchLocation(`${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
+        } finally {
+          setIsLocating(false);
+        }
+      },
+      (error) => {
+        console.error("Error getting location:", error);
+        let errorMessage = "Unable to get your location.";
+        
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage = "Location access denied by user.";
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = "Location information unavailable.";
+            break;
+          case error.TIMEOUT:
+            errorMessage = "Location request timed out.";
+            break;
+        }
+        
+        alert(errorMessage);
+        setIsLocating(false);
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 600000 // 10 minutes
+      }
+    );
+  };
 
   const stats = [
     { label: "Cities Monitored", value: "2,847", icon: MapPin, color: "text-data-primary" },
@@ -106,16 +168,22 @@ const HomePage = () => {
                 </Button>
               </div>
               
-              <Button variant="outline" size="sm" className="text-sm">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="text-sm" 
+                onClick={handleUseMyLocation}
+                disabled={isLocating}
+              >
                 <MapPin className="h-4 w-4 mr-2" />
-                Use my location
+                {isLocating ? "Getting location..." : "Use my location"}
               </Button>
             </div>
 
             {/* Current AQI Display */}
             <div className="nasa-card max-w-sm mx-auto p-6 animate-scale-in">
               <div className="text-center space-y-2">
-                <p className="text-sm text-muted-foreground">Current AQI - San Francisco, CA</p>
+                <p className="text-sm text-muted-foreground">Current AQI - {currentLocation}</p>
                 <div className="text-3xl font-bold text-air-good">42</div>
                 <Badge className="air-quality-good">Good</Badge>
                 <p className="text-xs text-muted-foreground">Last updated: 2 minutes ago</p>
